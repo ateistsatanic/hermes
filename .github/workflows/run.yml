@@ -21,15 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      # Add your build steps here (e.g., for Node.js, Python, etc.)
-      # Example for Node.js:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm install  # Изменено с npm ci на npm install
       
       - name: Build
         run: npm run build
@@ -37,7 +35,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'  # Change to your build output folder
+          path: './dist'  # Убедитесь, что это правильная папка для вашего проекта
 
   deploy:
     environment:
