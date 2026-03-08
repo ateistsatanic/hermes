@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools - Дополнения</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-header">
+        <div id="navigation">
+            <button id="typing-btn" class="nav-btn">Тайпинг</button>
+            <button id="compare-btn" class="nav-btn">Сравнение</button>
+            <button id="spelling-btn" class="nav-btn">Орфография</button>
+            <button id="enhance-btn" class="nav-btn active">Дополнения</button>
+            <button id="scan-btn" class="nav-btn">Сканирование</button>
+        </div>
+    </div>
+
+    <div class="compare-container">
+        <div class="text-box-container">
+            <div class="text-stats">
+                <span class="word-count">0 слов</span>
+                <span class="char-count">0 символов</span>
+            </div>
+            <div class="main-content">
+                <textarea id="source-text-area" placeholder="Введите исходный текст..."></textarea>
+            </div>
+        </div>
+
+        <div class="text-box-container">
+            <div class="text-stats">
+                <span class="word-count">0 слов</span>
+                <span class="char-count">0 символов</span>
+            </div>
+            <div class="main-content">
+                <textarea id="enhanced-text-area" placeholder="Здесь появится расширенный текст..." readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- КНОПКИ ПРЕОБРАЗОВАНИЯ - ПЕРЕНОСИМ ВВЕРХ -->
+    <div id="enhance-controls">
+        <button id="enhance-button" class="enhance-btn">Расширить текст</button>
+        <button id="copy-enhanced-button" class="enhance-btn" disabled>Копировать результат</button>
+    </div>
+
+    <div class="enhance-controls-container">
+        <!-- Файловая система -->
+        <div class="presets-section">
+            <h3>Управление наборами</h3>
+            <div class="presets-controls">
+                <button id="save-file-button" class="enhance-btn">Сохранить в файл</button>
+                <label for="load-files-input" class="enhance-btn">Выбрать файлы для обработки</label>
+                <input type="file" id="load-files-input" accept=".json" multiple style="display: none;">
+                <div id="selected-files-list" style="color: white; font-size: 12px; margin-top: 10px;"></div>
+            </div>
+        </div>
+
+        <!-- РЕДАКТОР ДЛЯ 1 ФАЙЛА -->
+        <div id="single-file-editor" style="display: none;">
+            <div class="enhance-lists">
+                <div class="enhance-list">
+                    <h3>Слова-триггеры (текущий)</h3>
+                    <textarea id="triggers-list" placeholder="Каждое слово/фраза с новой строки&#10;сын&#10;дочь&#10;дом"></textarea>
+                </div>
+                <div class="enhance-list">
+                    <h3>Слова для дополнения (текущий)</h3>
+                    <textarea id="enhancements-list" placeholder="Каждое слово/фраза с новой строки&#10;прекрасный&#10;умный&#10;красивый&#10;добрый&#10;сильный"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Прогресс обработки -->
+        <div id="processing-progress" style="display: none; margin-top: 20px; color: white;">
+            <div id="progress-text">Обработка файлов: 0/0</div>
+            <div id="current-file">Текущий файл: -</div>
+        </div>
+    </div>
+
+    <script src="enhance.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools - Typing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-header">
+        <div id="navigation">
+            <button id="typing-btn" class="nav-btn active">Тайпинг</button>
+            <button id="compare-btn" class="nav-btn">Сравнение</button>
+            <button id="spelling-btn" class="nav-btn">Орфография</button>
+            <button id="enhance-btn" class="nav-btn">Дополнения</button>
+            <button id="scan-btn" class="nav-btn">Сканирование</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="text-display"></div> 
+        <textarea id="text-area" autofocus></textarea>
+        <div id="custom-cursor"></div>
+    </div>
+
+    <!-- Кнопка копирования ОТДЕЛЬНО -->
+    <div id="copy-section">
+        <div id="copy-button-container">
+            <button id="copy-button" title="Скопировать текст" data-tooltip="Скопировать">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Копировать
+            </button>
+            <div id="lcvr-brand">LCVR</div>
+        </div>
+    </div>
+
+    <!-- Остальные элементы внизу -->
+    <div id="bottom-panel">
+        <!-- Счетчик слов и символов -->
+        <div id="word-counter-display">
+            <div id="count-block"> 
+                <span id="word-count">0</span>
+                <span id="char-count">0 символов</span>
+            </div>
+        </div>
+
+        <!-- Статистика WPM -->
+        <div id="typing-stats">
+            <div class="stat-item">
+                <span class="stat-label">Скорость</span>
+                <span id="wpm-value" class="stat-value">0</span>
+                <span class="stat-unit">WPM</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Символы</span>
+                <span id="cpm-value" class="stat-value">0</span>
+                <span class="stat-unit">CPM</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Точность</span>
+                <span id="accuracy-value" class="stat-value">100%</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="typing.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

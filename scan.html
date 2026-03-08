@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Scan - Анализ шаблонов</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+    .scan-container {
+        width: 95vw;
+        max-width: 850px;
+        margin: 80px auto 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .scan-controls {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .scan-btn {
+        padding: 10px 20px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .scan-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-color);
+        border-color: var(--accent-color);
+    }
+
+    .scan-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .scan-btn.primary {
+        background: rgba(208, 0, 0, 0.2);
+        border-color: var(--accent-color);
+        color: var(--text-color);
+    }
+
+    .scan-btn.primary:hover:not(:disabled) {
+        background: rgba(208, 0, 0, 0.3);
+    }
+
+    .status-info {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        text-align: center;
+    }
+
+    .status-info.loading {
+        border-color: var(--accent-color);
+        background: rgba(208, 0, 0, 0.1);
+    }
+
+    .results-container {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .result-item {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .result-item.match {
+        border-color: var(--accent-color);
+        background: rgba(208, 0, 0, 0.1);
+    }
+
+    .match-header {
+        color: var(--accent-color);
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: between;
+        align-items: center;
+    }
+
+    .match-text {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        font-family: monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .match-stats {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 10px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+
+    /* ИСПРАВЛЕНИЕ: убираем рамку у textarea */
+    #scan-text-area {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        color: var(--text-color);
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        padding: 15px;
+        box-sizing: border-box;
+        border: none !important; /* Убираем любую рамку */
+        outline: none !important; /* Убираем обводку при фокусе */
+        resize: none;
+        
+        scrollbar-width: auto;
+        scrollbar-color: rgba(208, 0, 0, 0.4) transparent;
+    }
+
+    /* Убираем рамку при фокусе */
+    #scan-text-area:focus {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    #scan-text-area::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    #scan-text-area::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #scan-text-area::-webkit-scrollbar-thumb {
+        background: rgba(208, 0, 0, 0.4);
+        border-radius: 7px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    #scan-text-area::-webkit-scrollbar-thumb:hover {
+        background: rgba(208, 0, 0, 0.6);
+    }
+
+    #scan-text-area::-webkit-scrollbar-thumb:active {
+        background: rgba(208, 0, 0, 0.8);
+    }
+
+    #scan-lcvr-brand {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: var(--accent-color);
+        font-size: 48px;
+        font-weight: 900;
+        letter-spacing: 8px;
+        opacity: 0.7;
+        text-transform: uppercase;
+        z-index: 1;
+        text-shadow: 0 0 20px rgba(208, 0, 0, 0.5),
+                     0 0 40px rgba(208, 0, 0, 0.3),
+                     0 0 60px rgba(208, 0, 0, 0.1);
+        animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @media (max-width: 768px) {
+        .scan-controls {
+            flex-direction: column;
+        }
+        
+        .scan-btn {
+            width: 100%;
+        }
+        
+        #scan-lcvr-brand {
+            font-size: 36px;
+            letter-spacing: 4px;
+            bottom: 10px;
+        }
+    }
+</style>
+</head>
+<body>
+    <div id="app-header">
+        <div id="navigation">
+            <button id="typing-btn" class="nav-btn">Тайпинг</button>
+            <button id="compare-btn" class="nav-btn">Сравнение</button>
+            <button id="spelling-btn" class="nav-btn">Орфография</button>
+            <button id="enhance-btn" class="nav-btn">Дополнения</button>
+            <button id="scan-btn" class="nav-btn active">Сканирование</button>
+        </div>
+    </div>
+
+    <div class="scan-container">
+        <h2>Сканирование текста на шаблоны</h2>
+        
+        <div class="scan-controls">
+            <button id="load-templates-btn" class="scan-btn primary">Загрузить шаблоны из канала</button>
+            <button id="scan-text-btn" class="scan-btn" disabled>Сканировать текст</button>
+            <button id="clear-results-btn" class="scan-btn">Очистить результаты</button>
+        </div>
+
+        <div class="status-info" id="status-info">
+            Нажмите "Загрузить шаблоны" для начала работы
+        </div>
+
+        <div class="progress-bar" id="progress-bar" style="display: none;">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+
+        <div class="main-content">
+            <textarea id="scan-text-area" placeholder="Введите текст для проверки на шаблоны..."></textarea>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <!-- Результаты будут здесь -->
+        </div>
+    </div>
+
+    <div id="scan-lcvr-brand">LCVR</div>
+
+    <script src="navigation.js"></script>
+    <script src="scan.js"></script>
+</body>
+</html>

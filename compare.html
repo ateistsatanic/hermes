@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools - Compare</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-header">
+        <div id="navigation">
+    <button id="typing-btn" class="nav-btn">Тайпинг</button>
+    <button id="compare-btn" class="nav-btn active">Сравнение</button>
+    <button id="spelling-btn" class="nav-btn">Орфография</button>
+    <button id="enhance-btn" class="nav-btn">Дополнения</button>
+    <button id="scan-btn" class="nav-btn">Сканирование</button>
+</div>
+    </div>
+
+    <div class="compare-container">
+        <div class="text-box-container">
+            <div class="text-stats">
+                <span class="word-count">0 слов</span>
+                <span class="char-count">0 символов</span>
+            </div>
+            <div class="main-content">
+                <textarea id="text-area-1" placeholder="Первый текст для сравнения..."></textarea>
+            </div>
+        </div>
+
+        <div class="text-box-container">
+            <div class="text-stats">
+                <span class="word-count">0 слов</span>
+                <span class="char-count">0 символов</span>
+            </div>
+            <div class="main-content">
+                <textarea id="text-area-2" placeholder="Второй текст для сравнения..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Добавляем статистику сравнения -->
+    <div id="comparison-stats">
+        <div class="stat-item">
+            <span class="stat-label">Разница в словах:</span>
+            <span class="stat-value" id="word-diff">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Разница в символах:</span>
+            <span class="stat-value" id="char-diff">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Соотношение:</span>
+            <span class="stat-value" id="ratio">1:1</span>
+        </div>
+    </div>
+
+    <!-- Красивая надпись LCVR -->
+    <div id="compare-lcvr-brand">LCVR</div>
+    
+    <script src="compare.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>

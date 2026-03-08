@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools - Spelling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="navigation">
+    <button id="typing-btn" class="nav-btn">Тайпинг</button>
+    <button id="compare-btn" class="nav-btn">Сравнение</button>
+    <button id="spelling-btn" class="nav-btn active">Орфография</button>
+    <button id="enhance-btn" class="nav-btn">Дополнения</button>
+    <button id="scan-btn" class="nav-btn">Сканирование</button>
+</div>
+    </div>
+
+    <div class="spelling-container">
+        <div class="text-box-container">
+            <div class="text-stats">
+                <span class="word-count">0 слов</span>
+                <span class="char-count">0 символов</span>
+            </div>
+            <div class="main-content">
+                <textarea id="spelling-text-area" placeholder="Введите текст для проверки орфографии..."></textarea>
+            </div>
+        </div>
+
+        <div id="spelling-controls">
+            <button id="check-spelling-button" class="spelling-btn">
+                Проверить орфографию
+            </button>
+            <button id="copy-corrected-button" class="spelling-btn" disabled>
+                Копировать исправленный текст
+            </button>
+        </div>
+
+        <div id="spelling-results" style="display: none;">
+            <h3>Результаты проверки:</h3>
+            <div id="errors-list"></div>
+        </div>
+    </div>
+
+    <div id="spelling-lcvr-brand">LCVR</div>
+
+    <script src="spelling.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>
